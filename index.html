@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My messenger</title>
+</head>
+<body>
+    <input id="message"></input>
+    <button id="send">Send</button>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+
+        var user = {id: 15, username: 'John'};
+        var io = io.connect({query: 'id='+user.id+'&username='+user.username});
+        
+        io.on('connection', (socket) => {
+
+            document.getElementById('send').addEventListener('click', (e) => {
+                io.to('U: ' + 7 ).emit('message', document.getElementById('message').value);
+            });
+       
+
+      
+            socket.on('message', function(message) {
+                console.log('Server says: ' + message);
+            });
+        })
+    //   var userName = prompt('What\s your username?');
+
+    //   socket.emit('identify', userName);
+
+    //   socket.on('message', function(message) {
+    //     console.log('Server says: ' + message);
+    //     if (message === 'Which room you want to join?') {
+    //         var room = prompt('Which room you want to join?(room-1, room-2, room-3)');
+    //         socket.emit('room', room);
+    //     }
+    //   })
+    </script>
+</body>
+</html>
